@@ -1,0 +1,60 @@
+{% extends 'careerapp/dashboard.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+
+        <h4 class="card-title">Post a Job</h4>
+        <p class="card-description">Fill the details below</p>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label>Job Title</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control" rows="4" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Skills Required</label>
+            <input type="text" name="skills" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" name="location" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Salary</label>
+            <input type="text" name="salary" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Job Type</label>
+            <select name="job_type" class="form-control">
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Post Job</button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

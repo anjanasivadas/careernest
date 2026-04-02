@@ -1,0 +1,17 @@
+{% extends "applications/base.html" %}
+{% block title %}Apply - {{ job.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Apply for {{ job.title }}</h2>
+    <p>{{ job.description }}</p>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="resume" class="form-label">Upload Resume</label>
+            <input type="file" name="resume" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CareerNest | Job Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+</head>
+
+<body>
+
+<!-- Navigation Start -->
+<nav class="navbar navbar-default navbar-sticky bootsnav">
+    <div class="container">
+
+        <!-- Logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'assets/img/logo.png' %}" class="logo" alt="">
+            </a>
+        </div>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a href="{% url 'home' %}">Home</a></li>
+
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'my_applications' %}">My Applications</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Navigation End -->
+
+<!-- 🔥 MAIN CONTENT BLOCK -->
+{% block content %}
+{% endblock %}
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+
+        <div class="col-md-3 col-sm-6">
+            <h4>Featured Job</h4>
+            <ul>
+                <li><a href="#">Browse Jobs</a></li>
+                <li><a href="#">Premium MBA Jobs</a></li>
+                <li><a href="#">Access Database</a></li>
+                <li><a href="#">Manage Responses</a></li>
+                <li><a href="#">Report a Problem</a></li>
+                <li><a href="#">Mobile Site</a></li>
+                <li><a href="#">Jobs by Skill</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <h4>Latest Job</h4>
+            <ul>
+                <li><a href="#">Browse Jobs</a></li>
+                <li><a href="#">Premium MBA Jobs</a></li>
+                <li><a href="#">Access Database</a></li>
+                <li><a href="#">Manage Responses</a></li>
+                <li><a href="#">Report a Problem</a></li>
+                <li><a href="#">Mobile Site</a></li>
+                <li><a href="#">Jobs by Skill</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <h4>Reach Us</h4>
+            <address>
+                <ul>
+                    <li>1201, Murakeu Market, QUCH07<br>United Kingdom</li>
+                    <li>Email: Support@job.com</li>
+                    <li>Call: 044 123 458 65879</li>
+                    <li>Skype: job@skype</li>
+                    <li>FAX: 123 456 85</li>
+                </ul>
+            </address>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <h4>Drop A Mail</h4>
+            <form>
+                <input type="text" class="form-control input-lg" placeholder="Your Name">
+                <input type="text" class="form-control input-lg" placeholder="Email...">
+                <textarea class="form-control" placeholder="Message"></textarea>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="copy-right">
+        <p>&copy; Copyright 2026 CareerNest | Portal</p>
+    </div>
+</footer>
+
+<!-- JS -->
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/js/bootsnav.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

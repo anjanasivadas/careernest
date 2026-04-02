@@ -1,0 +1,61 @@
+{% extends 'careerapp/dashboard.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+
+        <h4 class="card-title">Edit Job</h4>
+        <p class="card-description">Update job details</p>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label>Job Title</label>
+            <input type="text" name="title" class="form-control" value="{{ job.title }}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control" rows="4" required>{{ job.description }}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Skills Required</label>
+            <input type="text" name="skills" class="form-control" value="{{ job.skills }}">
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" name="location" class="form-control" value="{{ job.location }}">
+          </div>
+
+          <div class="form-group">
+            <label>Salary</label>
+            <input type="text" name="salary" class="form-control" value="{{ job.salary }}">
+          </div>
+
+          <div class="form-group">
+            <label>Job Type</label>
+            <select name="job_type" class="form-control">
+              <option value="Full-time" {% if job.job_type == "Full-time" %}selected{% endif %}>Full-time</option>
+              <option value="Part-time" {% if job.job_type == "Part-time" %}selected{% endif %}>Part-time</option>
+              <option value="Internship" {% if job.job_type == "Internship" %}selected{% endif %}>Internship</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success">Update Job</button>
+          <a href="{% url 'manage_jobs' %}" class="btn btn-light">Cancel</a>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>CareerNest | Admin</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
+  <style>
+      .content-wrapper {
+          width: 100% !important;
+          max-width: 100% !important;
+          overflow-x: auto;
+      }
+
+      .table-responsive {
+          overflow-x: auto;
+      }
+  </style>
+
+</head>
+
+<body>
+<div class="container-scroller">
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+
+      <!-- 🔹 PROFILE (WELCOME – 1st PLACE) -->
+      <li class="nav-item profile">
+        <div class="profile-desc">
+          <div class="profile-pic">
+            <div class="count-indicator">
+              <img class="img-xs rounded-circle"
+                   src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
+              <span class="count bg-success"></span>
+            </div>
+            <div class="profile-name">
+                {% if request.user.is_authenticated %}
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">
+                      {{ request.user.username }}
+                  </p>
+                {% endif %}
+              <span>{{ request.user.user_type|title }}</span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item nav-category">
+        <span class="nav-link">Navigation</span>
+      </li>
+
+      <!-- Dashboard -->
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'careerapp:dashboard' %}">
+        <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+
+    <!-- Post Job -->
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'careerapp:post_job' %}">
+        <span class="menu-icon"><i class="mdi mdi-plus-box"></i></span>
+        <span class="menu-title">Post Job</span>
+      </a>
+    </li>
+
+    <!-- Manage Jobs -->
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'careerapp:manage_jobs' %}">
+        <span class="menu-icon"><i class="mdi mdi-briefcase"></i></span>
+        <span class="menu-title">Manage Jobs</span>
+      </a>
+    </li>
+    </ul>
+</nav>
+
+  <!-- ================= SIDEBAR END ================= -->
+
+  <!-- ================= PAGE BODY ================= -->
+  <div class="container-fluid page-body-wrapper">
+
+    <!-- 🔹 TOP NAVBAR (WELCOME – 2nd PLACE) -->
+    <nav class="navbar p-0 fixed-top d-flex flex-row">
+      <div class="navbar-menu-wrapper flex-grow d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" data-toggle="dropdown">
+              <div class="navbar-profile">
+                <img class="img-xs rounded-circle"
+                     src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
+                {% if request.user.is_authenticated %}
+                  <h5 class="mb-0 font-weight-normal">{{ request.user.username }}</h5>
+                {% endif %}
+                <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
+              <a class="dropdown-item preview-item" href="{% url 'careerapp:admin-logout' %}">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-logout text-danger"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject mb-1">Log out</p>
+                </div>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ================= MAIN PANEL ================= -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+
+        <!-- Header Card -->
+        <div class="row">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card corona-gradient-card">
+              <div class="card-body">
+                <h4 class="mb-0">💼CareerNest Dashboard</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        {% block content %}
+        <div class="row">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h3>Welcome to the Dashboard</h3>
+                <p>Use the sidebar to manage jobs, employers, and applications.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center">
+          <span class="text-muted">CareerNest Admin © 2026</span>
+        </div>
+      </footer>
+
+    </div>
+    <!-- ================= MAIN PANEL END ================= -->
+
+  </div>
+</div>
+
+<!-- JS -->
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'assets/js/off-canvas.js' %}"></script>
+<script src="{% static 'assets/js/misc.js' %}"></script>
+
+</body>
+</html>

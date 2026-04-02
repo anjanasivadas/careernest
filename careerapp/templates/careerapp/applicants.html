@@ -1,0 +1,74 @@
+{% extends 'careerapp/dashboard.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+
+        <h4 class="card-title">Applicants</h4>
+        <p class="card-description">
+          Total Applicants: {{ applications|length }}
+        </p>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Resume</th>
+                <th>Status</th>
+                <th>Applied On</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for application in applications %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ application.applicant.username }}</td>
+                <td>{{ application.applicant.email }}</td>
+
+                <td>
+                  {% if application.resume %}
+                    <a href="{{ application.resume.url }}" target="_blank" class="btn btn-sm btn-info">
+                      View
+                    </a>
+                  {% else %}
+                    No Resume
+                  {% endif %}
+                </td>
+
+                <td>
+                  <span class="badge
+                    {% if application.status == 'Pending' %}badge-warning
+                    {% elif application.status == 'Shortlisted' %}badge-success
+                    {% else %}badge-danger{% endif %}">
+                    {{ application.status }}
+                  </span>
+                </td>
+
+                <td>{{ application.applied_at }}</td>
+
+              </tr>
+
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No applicants yet</td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

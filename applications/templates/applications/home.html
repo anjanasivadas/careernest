@@ -1,0 +1,129 @@
+{% extends "applications/base.html" %}
+{% load static %}
+
+{% block title %}Home - Job Board{% endblock %}
+
+{% block content %}
+
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+<!--                <img src="{% static 'assets/img/logo.png' %}" alt="Logo">-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Header Start -->
+<header>
+    <!-- ... keep your existing header code ... -->
+</header>
+<!-- Header End -->
+
+<!-- Main Content -->
+<main>
+
+    <!-- Hero Section -->
+    <section class="slider-area">
+        <div class="single-slider slider-height d-flex align-items-center"
+             style="background-image: url({% static 'assets/img/hero/hero1.jpg' %});">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-9 col-md-10">
+                        <div class="hero__caption">
+                            <h1>Find Your Dream Job</h1>
+                            <p>Explore thousands of job opportunities and grow your career</p>
+
+                            <!-- Search Box -->
+                            <div class="hero__search">
+                                <form action="{% url 'home' %}" method="GET" class="d-flex">
+                                    <input type="text" name="q" placeholder="Job title or keyword"
+                                           class="form-control mr-2">
+                                    <button type="submit" class="btn hero-btn">Search</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="category-area section-padding">
+        <div class="container">
+            <div class="section-tittle text-center mb-50">
+                <h2>Browse Job Categories</h2>
+                <p>Find jobs by category</p>
+            </div>
+
+            <div class="row">
+                <!-- Example categories; you can dynamically generate later -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-category text-center">
+                        <h4>IT & Software</h4>
+                        <p>{{ jobs|length }} Jobs</p>
+                    </div>
+                </div>
+                <!-- Add other categories similarly -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs Section -->
+    <section class="featured-job-area section-padding">
+        <div class="container">
+            <div class="section-tittle text-center mb-50">
+                <h2>Featured Jobs</h2>
+            </div>
+
+            {% for job in jobs %}
+            <div class="single-job-items mb-30">
+                <div class="job-items d-flex align-items-center">
+                    <div class="job-tittle">
+                        <h4>{{ job.title }}</h4>
+                        <p>{{ job.employer.username }} • {{ job.location }}</p>
+                        <p>Skills: {{ job.skills }} | Salary: {% if job.salary %}₹{{ job.salary }}{% else %}Not disclosed{% endif %}</p>
+                    </div>
+                </div>
+                <div class="items-link">
+                    {% if job in applied_jobs %}
+                        <span class="btn btn-secondary disabled">Already Applied</span>
+                    {% else %}
+                        <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">Apply Now</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+                <p>No jobs available currently.</p>
+            {% endfor %}
+
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer Start -->
+<footer>
+    <div class="footer-area footer-bg">
+        <div class="container">
+            <div class="footer-bottom footer-border">
+                <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col-xl-12">
+                        <div class="footer-copy-right text-center">
+                            <p>© 2026 CareerNest. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+
+{% endblock %}
