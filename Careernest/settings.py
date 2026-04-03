@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['anjanaes.pythonanywhere.com']
+ALLOWED_HOSTS = ['anjanaes.pythonanywhere.com', '127.0.0.1']
 
 # Where Django will collect static files for deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
