@@ -14,7 +14,7 @@ def sign_in(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('home')  # Redirect to applications home after login
+            return redirect('home')
         else:
             messages.error(request, "Invalid username or password")
     return render(request, 'applications/sign_in.html')
@@ -28,7 +28,7 @@ def sign_up(request):
 def home(request):
     profile = Profile.objects.filter(user=request.user).first()
     if profile and profile.user_type != 'candidate':
-        return redirect('/career/dashboard/')
+        return redirect('/careerapp/dashboard/')
     jobs = Job.objects.all()
     return render(request, 'applications/home.html', {'jobs': jobs})
 
@@ -59,4 +59,4 @@ def my_applications(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('home')
+    return redirect('careerapp:sign_in')

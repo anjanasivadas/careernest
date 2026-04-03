@@ -110,9 +110,11 @@
                     <i class="mdi mdi-logout text-danger"></i>
                   </div>
                 </div>
-                <div class="preview-item-content">
-                  <p class="preview-subject mb-1">Log out</p>
-                </div>
+                <a href="{% url 'logout' %}">
+                  <div class="preview-item-content">
+                    <p class="preview-subject mb-1">Log out</p>
+                  </div>
+                </a>
               </a>
             </div>
           </li>
