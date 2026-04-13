@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import Job, Application, Profile
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.contrib.auth import logout
 
 def employer_or_admin_required(view_func):
     def wrapper(request, *args, **kwargs):
@@ -25,10 +28,10 @@ def sign_in(request):
             profile = Profile.objects.filter(user=user).first()
             if profile:
                 if profile.user_type == 'admin':
-                    return redirect('career_dashboard')
+                    return redirect('careerapp:career_dashboard')
                 elif profile.user_type == 'employer':
-                    return redirect('manage_jobs')
-            return redirect('career_dashboard')
+                    return redirect('careerapp:manage_jobs')
+            return redirect('careerapp:career_dashboard')
         else:
             messages.error(request, "Invalid username or password")
     return render(request, 'careerapp/SignIn.html')
@@ -70,8 +73,10 @@ def admin_login(request):
     return render(request, 'careerapp/admin_login.html')
 
 def admin_logout(request):
+    storage = messages.get_messages(request)
+    storage.used = True
     logout(request)
-    return redirect('careerapp:admin-login')
+    return redirect('careerapp:sign_in')
 
 # -------------------------
 # User-Facing Views
@@ -86,7 +91,9 @@ def home(request):
 @login_required
 def apply_job(request, job_id):
     job = get_object_or_404(Job, id=job_id)
-    already_applied = Application.objects.filter(job=job, applicant=request.user).exists()
+    already_applied = Application.objects.filter(
+        job=job, applicant=request.user
+    ).exists()
     if already_applied:
         messages.info(request, "You have already applied for this job.")
         return redirect('home')
@@ -94,10 +101,41 @@ def apply_job(request, job_id):
         resume = request.FILES.get('resume')
         if not resume:
             messages.error(request, "Please upload a resume to apply.")
-        else:
-            Application.objects.create(job=job, applicant=request.user, resume=resume)
-            messages.success(request, "Application submitted successfully!")
-            return redirect('home')
+            return redirect('apply_job', job_id=job.id)
+        application = Application.objects.create(
+            job=job,
+            applicant=request.user,
+            resume=resume
+        )
+        candidate_email = request.user.email
+        if candidate_email:
+            subject = "Application Submitted Successfully"
+            message = f"""
+Dear {request.user.first_name or request.user.username},
+
+Your application for "{job.title}" has been successfully submitted.
+
+We will review your profile and contact you if shortlisted.
+
+Thank you for applying!
+
+CareerNest Team
+            """
+            email = EmailMessage(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                [candidate_email],
+            )
+            if application.resume:
+                email.attach_file(application.resume.path)
+
+            try:
+                email.send(fail_silently=False)
+            except Exception as e:
+                print("Email error:", e)
+        messages.success(request, "Application submitted successfully!")
+        return redirect('home')
     return render(request, 'applications/apply.html', {'job': job})
 
 @login_required
@@ -172,7 +210,7 @@ def edit_job(request, id):
         job.job_type = request.POST['job_type']
         job.save()
         messages.success(request, "Job updated successfully")
-        return redirect('manage_jobs')
+        return redirect('careerapp:manage_jobs')
     return render(request, 'careerapp/edit_job.html', {'job': job})
 
 @login_required
