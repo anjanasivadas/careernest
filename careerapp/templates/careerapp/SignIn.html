@@ -11,11 +11,11 @@
   <div class="login-html">
 
     <h2 style="color:white;text-align:center;">Sign In</h2>
-    {% if messages %}
-      {% for message in messages %}
-        <p style="color:red; text-align:center;">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
+<!--    {% if messages %}-->
+<!--      {% for message in messages %}-->
+<!--        <p style="color:red; text-align:center;">{{ message }}</p>-->
+<!--      {% endfor %}-->
+<!--    {% endif %}-->
     <form method="post" action="{% url 'sign_in' %}">
       {% csrf_token %}
 
